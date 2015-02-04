@@ -21,4 +21,6 @@ run `npm install`
 
 ## Run
 
-run `gulp`. Check the server is running: `curl 127.0.0.1:3000/api/hello`
+run `gulp`. 
+
+Check the server is running: `curl 127.0.0.1:3000/api/hello`
