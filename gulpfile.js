@@ -1,10 +1,12 @@
 var gulp    = require('gulp');
 var nodemon = require('gulp-nodemon');
 var jshint = require('gulp-jshint');
+var stylish = require('jshint-stylish');
 
 gulp.task('lint', function () {
-  return gulp.src('./**/*.js')
-    .pipe(jshint());
+  return gulp.src('./lib/**/*.js')
+    .pipe(jshint())
+    .pipe(jshint.reporter(stylish));
 });
 
 gulp.task('server', function () {
