@@ -1,0 +1,21 @@
+{
+  "name": "skeleton-api",
+  "version": "1.0.0",
+  "description": "Skeleton nodejs app",
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp test"
+  },
+  "author": "Kevin Delemme <kdelemme@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.8.10",
+    "gulp-jshint": "^1.9.2",
+    "gulp-nodemon": "^1.0.5"
+  },
+  "dependencies": {
+    "express": "^4.11.2",
+    "morgan": "^1.5.1",
+    "path": "^0.11.14"
+  }
+}
