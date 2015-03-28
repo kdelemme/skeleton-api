@@ -4,7 +4,7 @@
 
 Node must be installed
 
-`~/.secret/skeleton-api.json` must be created with content:
+`~/.secret/skeleton-api.json` may contain private keys:
 
     {
       "dev": {
@@ -17,7 +17,7 @@ Node must be installed
 
 ## Installation
 
-run `npm install`
+run `npm install`.
 
 ## Run
 
