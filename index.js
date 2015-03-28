@@ -1,6 +1,7 @@
-var express = require('express')
+"use strict";
+var express = require('express');
 var app     = express();
-var morgan = require('morgan')
+var morgan = require('morgan');
 
 var APP_ENV = process.env.APP_ENV || 'dev';
 var config  = require('./config/config')[APP_ENV];
