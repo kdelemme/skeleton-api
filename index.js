@@ -2,6 +2,7 @@
 var express = require('express');
 var app     = express();
 var morgan = require('morgan');
+var bodyParser = require('body-parser')
 
 var APP_ENV = process.env.APP_ENV || 'dev';
 var config  = require('./config/config')[APP_ENV];
@@ -10,6 +11,8 @@ app.get('/status', function(req, res) {
   res.status(200).send('OK');
 });
 
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json());
 app.use(morgan('combined'));
 app.use('/api', require('./lib')(config));
 
