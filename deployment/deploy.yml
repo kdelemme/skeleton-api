@@ -1,0 +1,12 @@
+---
+- name: Deploy application on production
+  hosts: production
+  remote_user: appadmin
+
+- name: Add supervisor configuration
+  hosts: production
+  remote_user: appadmin
+
+- name: Run application
+  hosts: production
+  remote_user: appadmin

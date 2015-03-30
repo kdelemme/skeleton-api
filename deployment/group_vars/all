@@ -1,0 +1,3 @@
+---
+application_name: skeleton-api
+application_path: "/var/www/projects/api/{{ application_name }}"
