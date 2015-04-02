@@ -14,7 +14,7 @@ app.get('/status', function(req, res) {
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 app.use(morgan('combined'));
-app.use('/api', require('./lib')(config));
+app.use('/api', require('./lib')(console, config));
 
 var server = app.listen(config.port, function () {
   var host = server.address().address;
