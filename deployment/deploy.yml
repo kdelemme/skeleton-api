@@ -1,12 +1,8 @@
 ---
-- name: Deploy application on production
-  hosts: production
+- hosts: production
+  vars:
+    foo: 12345
   remote_user: appadmin
-
-- name: Add supervisor configuration
-  hosts: production
-  remote_user: appadmin
-
-- name: Run application
-  hosts: production
-  remote_user: appadmin
+  tasks:
+  - name: Copy projects to remote server
+    copy: src=../../skeleton-api dest=/var/www/projects/api force=true owner=appadmin
