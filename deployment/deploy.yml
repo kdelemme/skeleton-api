@@ -1,8 +1,22 @@
 ---
+- hosts: 127.0.0.1
+  tasks:
+   - name: Create tar file from source
+     local_action: command tar -zvcf /tmp/source.tgz --exclude './node_modules/' --exclude './.git/' --exclude './deployment/' ..
+
 - hosts: production
   vars:
-    foo: 12345
+    project_path: /var/www/projects/api/skeleton-api
   remote_user: appadmin
   tasks:
-  - name: Copy projects to remote server
-    copy: src=../../skeleton-api dest=/var/www/projects/api force=true owner=appadmin
+  - name: Copy tarball to remote server
+    copy: src=/tmp/source.tgz dest=/tmp/ force=true owner=appadmin
+
+  - name: Create project directory
+    file: path={{ project_path }} state=directory
+
+  - name: Extract tarball to remote directory
+    unarchive: src=/tmp/source.tgz dest={{ project_path }}
+
+  - name: Run npm install
+    npm: path={{ project_path }}

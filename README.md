@@ -35,9 +35,9 @@ Create a `appadmin` user on your server.
 
 create a ssh key and set the newly created public key in the remote `/home/appadmin/.ssh/authorized_keys` file.
 
-Test your servers are reachable by runnin: `ansible all -m ping -i hosts --private-key ~/.ssh/appadmin.remote.rsa -u appadmin -vvvv`
+Test your servers are reachable by runnin: `ansible all -m ping -i hosts --private-key ~/.ssh/appadmin.remote.rsa -vvvv`
 
-Deploy: `ansible-playbook deploy.yml -i hosts --private-key ~/.ssh/appadmin.remote.rsa -u appadmin -vvvv`
+Deploy: `ansible-playbook deploy.yml -i hosts --private-key ~/.ssh/appadmin.remote.rsa -vvvv`
 
 
 ## API
