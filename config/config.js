@@ -5,7 +5,7 @@ var secret = require(path.join(HOME, '.secret/skeleton-api.json'));
 
 module.exports = {
   dev: {
-    port: 3000,
+    port: 3030,
     database: {
       client: 'pg',
       connection: {

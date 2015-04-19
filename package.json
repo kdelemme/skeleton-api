@@ -4,6 +4,7 @@
   "description": "Skeleton nodejs app",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "gulp test"
   },
   "author": "Kevin Delemme <kdelemme@gmail.com>",
