@@ -6,21 +6,30 @@
 
 - hosts: production
   vars:
-    project_path: /var/www/projects/api/skeleton-api
+    projects_path: /var/www/projects/api
+    logs_path: /var/log/projects/api
+    app_name: skeleton-api
   remote_user: appadmin
   tasks:
   - name: Copy tarball to remote server
     copy: src=/tmp/source.tgz dest=/tmp/ force=true owner=appadmin
 
+  - name: Delete project directory
+    file: path={{ projects_path }}/{{ app_name }} state=absent
+
   - name: Create project directory
-    file: path={{ project_path }} state=directory
+    file: path={{ projects_path }}/{{ app_name }} state=directory
 
   - name: Extract tarball to remote directory
-    unarchive: src=/tmp/source.tgz dest={{ project_path }}
+    unarchive: src=/tmp/source.tgz dest={{ projects_path }}/{{ app_name }}
 
   - name: Run npm install
-    npm: path={{ project_path }}
+    npm: path={{ projects_path }}/{{ app_name }}
+
+  - name: Create logs directory if it doesn't exist yet
+    file: path={{ logs_path }} state=directory
 
   - name: Create supervisor file from template
+    template: src=templates/supervisor/supervisor.j2 dest=/etc/supervisor/api.conf.d/{{ app_name }}.conf
 
-  - name: Run supervisor for the application
+#  - name: Run supervisor for the application
