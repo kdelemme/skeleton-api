@@ -11,6 +11,9 @@
     app_name: skeleton-api
   remote_user: appadmin
   tasks:
+  - name: Stop supervisor for the application
+    action: command supervisorctl stop {{ app_name }}
+
   - name: Copy tarball to remote server
     copy: src=/tmp/source.tgz dest=/tmp/ force=true owner=appadmin
 
@@ -30,6 +33,7 @@
     file: path={{ logs_path }} state=directory
 
   - name: Create supervisor file from template
-    template: src=templates/supervisor/supervisor.j2 dest=/etc/supervisor/api.conf.d/{{ app_name }}.conf
+    template: src=templates/supervisor/supervisor.j2 dest=/etc/supervisor/conf.d/{{ app_name }}.conf
 
-#  - name: Run supervisor for the application
+  - name: Run supervisor for the application
+    action: command supervisorctl start {{ app_name }}
