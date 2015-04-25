@@ -2,15 +2,24 @@
 - hosts: 127.0.0.1
   tasks:
    - name: Create tar file from source
-     local_action: command tar -zvcf /tmp/source.tgz --exclude './node_modules/' --exclude './.git/' --exclude './deployment/' ..
+     local_action: command tar -zvcf /tmp/source.tgz --exclude './node_modules/' --exclude './.git/' --exclude './deployment/' -C .. .
+
+
 
 - hosts: production
   vars:
     projects_path: /var/www/projects/api
     logs_path: /var/log/projects/api
     app_name: skeleton-api
+    port: 4000
+    db_dialect: pg
+    db_host: 127.0.0.1
+    db_user: appadmin
+    db_name: skeleton_db
   remote_user: appadmin
   tasks:
+  - include_vars: vars/private.yml
+
   - name: Stop supervisor for the application
     action: command supervisorctl stop {{ app_name }}
 
@@ -24,7 +33,10 @@
     file: path={{ projects_path }}/{{ app_name }} state=directory
 
   - name: Extract tarball to remote directory
-    unarchive: src=/tmp/source.tgz dest={{ projects_path }}/{{ app_name }}
+    unarchive: copy=no src=/tmp/source.tgz dest={{ projects_path }}/{{ app_name }}
+
+  - name: Create api config file from template
+    template: src=templates/config/config.j2 dest={{ projects_path }}/{{ app_name }}/config/config.js
 
   - name: Run npm install
     npm: path={{ projects_path }}/{{ app_name }}
@@ -35,5 +47,5 @@
   - name: Create supervisor file from template
     template: src=templates/supervisor/supervisor.j2 dest=/etc/supervisor/conf.d/{{ app_name }}.conf
 
-  - name: Run supervisor for the application
+  - name: Start supervisor for the application
     action: command supervisorctl start {{ app_name }}
