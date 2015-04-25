@@ -4,8 +4,6 @@
    - name: Create tar file from source
      local_action: command tar -zvcf /tmp/source.tgz --exclude './node_modules/' --exclude './.git/' --exclude './deployment/' -C .. .
 
-
-
 - hosts: production
   vars:
     projects_path: /var/www/projects/api
