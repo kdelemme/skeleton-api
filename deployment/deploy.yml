@@ -45,5 +45,8 @@
   - name: Create supervisor file from template
     template: src=templates/supervisor/supervisor.j2 dest=/etc/supervisor/conf.d/{{ app_name }}.conf
 
+  - name: Update supervisor
+    action: command supervisorctl update
+
   - name: Start supervisor for the application
     action: command supervisorctl start {{ app_name }}
