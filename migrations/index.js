@@ -1,9 +1,5 @@
 "use strict";
-var path = require('path');
-var HOME = process.env.HOME || process.env.HOMEPATH;
-var APP_ENV = process.env.APP_ENV || 'dev';
-var config  = require('../config/config')[APP_ENV];
-
+var config  = require('../config/config');
 var knex = require('knex')(config.database);
 
 knex.schema.hasTable('users')
