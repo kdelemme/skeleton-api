@@ -6,8 +6,8 @@
 
 - hosts: production
   vars:
-    projects_path: /var/www/projects/api
-    logs_path: /var/log/projects/api
+    projects_path: /home/appadmin/apps
+    logs_path: /var/log/apps
     app_name: skeleton-api
     port: 4000
     db_dialect: pg
