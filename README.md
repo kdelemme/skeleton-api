@@ -1,25 +1,16 @@
 # API
 
-This project can be used to quickly start your application.
+This project can be used to quickly start a nodejs application deployed with ansible.
 
 ## Pre requisite
 
-Node must be installed
-
-`~/.secret/skeleton-api.json` may contain private keys:
-
-    {
-      "dev": {
-        "password": "foo"
-      },
-      "prod": {
-        "password": "bar"
-      }
-    }
+- node >= v4.0.0
+- gulp
+- ansible
 
 ## Installation
 
-run `npm install`.
+run `npm install`
 
 ## Run
 
@@ -29,36 +20,33 @@ Check the server is running: `http 127.0.0.1:3000/status`
 
 ## Deployment (Ansible)
 
-Add your server address in the `hosts` file.
 
-Create a `appadmin` user on your server.
+### Configure your local env
 
-create a ssh key and set the newly created public key in the remote `/home/appadmin/.ssh/authorized_keys` file.
+Create the ansible vault: `ansible-vault create deployment/vars/private.yml`. 
+Enter a password, then create a file containing the password outside of your project, e.g: `echo MyPassword > ~/.secret/vault-password.txt`.
+
+You can now add your private variables into the ansible vault with `ansible-vault edit deployment/vars/private.yml --vault-password-file ~/.secret/vault-password.txt` (cf deployment/vars/private.template.yml for example).
+
+
+### Configure your server
+
+Create a `appadmin` user.
+
+Generate a new SSH key `appadmin.remote` and put it into `/home/appadmin/.ssh/authorized_keys`.
+
+Install supervisor on your server. Make sure `appadmin` has the right permission to use it.
+
+Create a folder `/var/apps` and give access to your `appadmin` user.
 
 Test your servers are reachable by running: `ansible all -m ping -i vars --private-key ~/.ssh/appadmin.remote.rsa -vvvv`
 
-Create the ansible vault: `ansible-vault create vars/private.yml`. 
-Enter a password, then create a file containing the password outside of your project, e.g: `echo MyPassword > ~/.secret/vault-password.txt`.
-You can now add your private variables: `ansible-vault edit vars/private.yml --vault-password-file ~/.secret/vault-password.txt` (cf private.template.yml for example).
 
-Deploy: `ansible-playbook deploy.yml -i vars --vault-password-file ~/.secret/vault-password.txt --private-key ~/.ssh/appadmin.remote.rsa -vvvv`
+### Deploy
 
+Deploy: `ansible-playbook deployment/deploy.yml -i deployment/vars --vault-password-file ~/.secret/vault-password.txt --private-key ~/.ssh/appadmin.remote.rsa -vvvv`
 
-## API
-
-### users
-
-#### Create a new user
-
-POST `http 127.0.0.1:3000/api/users/register email=foo@me.com password=Foo$Bar`. 
-
-returns `200` if the email is not already used
-
-#### Login
-
-POST `http 127.0.0.1:3000/api/users/login email=foo@me.com password=Foo$Bar`.
-
-returns `{ token: ACCESS_TOKEN }` if the credentials match a user in the db.
+Check your nodejs app is running: `curl http://SERVER_IP:4000/status`
 
 ## License
 
