@@ -1,8 +1,8 @@
 "use strict";
-var gulp    = require('gulp');
-var nodemon = require('gulp-nodemon');
-var jshint = require('gulp-jshint');
-var stylish = require('jshint-stylish');
+const gulp    = require('gulp');
+const nodemon = require('gulp-nodemon');
+const jshint = require('gulp-jshint');
+const stylish = require('jshint-stylish');
 
 gulp.task('lint', function () {
   return gulp.src('./lib/**/*.js')
@@ -14,7 +14,7 @@ gulp.task('server', function () {
   nodemon({ script: 'index.js' })
     .on('change', ['lint'])
     .on('restart', function () {
-      console.log('node process restarted!');
+    	console.log('node process restarted!');
     });
 });
 

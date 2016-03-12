@@ -1,21 +1,21 @@
-"use strict";
-var express = require('express');
-var app     = express();
-var morgan = require('morgan');
-var bodyParser = require('body-parser')
-var config  = require('./config/config');
+'use strict';
+const express = require('express');
+const app     = express();
+const morgan = require('morgan');
+const bodyParser = require('body-parser')
+const config  = require('./config/config');
 
 app.get('/status', function(req, res) {
-  res.status(200).send('OK');
+	res.status(200).send('OK');
 });
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
-app.use('/api', require('./lib')(console, config));
+app.use(morgan('combined'));
 
-var server = app.listen(config.port, function () {
-  var host = server.address().address;
-  var port = server.address().port;
+const server = app.listen(config.port, function () {
+  const host = server.address().address;
+  const port = server.address().port;
 
-  console.log('Skeleton API listening at http://%s:%s', host, port);
+  console.log('API listening at http://%s:%s', host, port);
 });
