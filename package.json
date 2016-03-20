@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "mocha"
+    "test": "mocha",
+    "deploy": "ansible-playbook deployment/deploy.yml -i deployment/vars --vault-password-file ~/.secret/vault-password.txt --private-key ~/.ssh/appadmin.remote.rsa -vvvv"
   },
   "author": "Kevin Delemme <kdelemme@gmail.com>",
   "license": "MIT",
